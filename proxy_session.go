@@ -51,7 +51,11 @@ func (twilio *Twilio) NewProxySession(serviceID string, req ProxySessionRequest)
 
 	twilioUrl := fmt.Sprintf("%s/%s/%s/%s", ProxyBaseUrl, "Services", serviceID, "Sessions")
 
-	res, err := twilio.post(proxySessionFormValues(req), twilioUrl)
+	formValue, err := proxySessionFormValues(req)
+	if err != nil {
+		return response, exception, err
+	}
+	res, err := twilio.post(formValue, twilioUrl)
 	if err != nil {
 		return response, exception, err
 	}
