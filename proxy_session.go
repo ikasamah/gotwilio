@@ -193,8 +193,9 @@ func proxySessionFormValues(req ProxySessionRequest) (url.Values, error) {
 	if req.Mode != "" {
 		formValues.Set("Mode", req.Mode)
 	}
-	for _, participant := range req.Participants {
-		jsonByte, err := json.Marshal(participant)
+
+	if len(req.Participants) > 0 {
+		jsonByte, err := json.Marshal(req.Participants)
 		if err != nil {
 			return nil, err
 		}
